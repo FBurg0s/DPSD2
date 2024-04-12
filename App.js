@@ -1,53 +1,87 @@
-
-import { StyleSheet, Text, View } from 'react-native';
-//Redireccionamiento con Stack
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, Text, StyleSheet } from 'react-native';
+import SolarSystemScreen from './screens/SolarSystemScreen';
+import EarthScreen from './screens/EarthScreen';
+import SunScreen from './screens/SunScreen';
 
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import 'react-native-gesture-handler';
-
-import { useEffect, useState } from 'react';
-
-//TIPOGRAFIA
-import * as Font from 'expo-font' 
-//PANTALLAS
-import Login from './Screens/Login'
-import SingUp from './Screens/SingUp';
-import DashBoard from "./Screens/DashBoard";
-import AgregarPersonas from './Screens/AgregarPersonas';
-import list from './Components/list';
-import VerListado from './Screens/VerListado';
-//El stack para el navigator
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-
-  
-
-    
- 
-
-  //DIRECIONES TIPO STACK
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName ="Inicio de sesion">
-        <Stack.Screen name="Inicio de sesion" component={Login} />
-        <Stack.Screen name="Crear Cuenta" component={SingUp} />
-        <Stack.Screen name="Salir" component={DashBoard} />
-        <Stack.Screen name="Agregar Personas" component={AgregarPersonas} />
-        <Stack.Screen name="ver Listado" component={VerListado} />
-
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: 'lightblue',
+            borderTopWidth: 2,
+            borderTopColor: 'blue',
+            height: 50, // Altura de la barra de pestañas
+          },
+          tabBarLabelStyle: {
+            fontSize: 16,
+            fontWeight: 'bold',
+            marginBottom: 5, // Margen inferior del texto
+          },
+          tabBarIconStyle: {
+            marginBottom: -3, // Ajuste para alinear el icono con el texto
+          },
+          tabBarActiveTintColor: 'blue',
+          tabBarInactiveTintColor: 'gray',
+        }}>
+        <Tab.Screen
+          name="Sistema Solar"
+          component={SolarSystemScreen}
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <View style={[styles.tabItem, focused && styles.tabItemFocused]}>
+                <Text style={styles.tabItemText}>Sistema Solar</Text>
+              </View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Tierra"
+          component={EarthScreen}
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <View style={[styles.tabItem, focused && styles.tabItemFocused]}>
+                <Text style={styles.tabItemText}>Tierra</Text>
+              </View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Sol"
+          component={SunScreen}
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <View style={[styles.tabItem, focused && styles.tabItemFocused]}>
+                <Text style={styles.tabItemText}>Sol</Text>
+              </View>
+            ),
+          }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  tabItem: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    borderRightWidth: 1,
+    borderColor: 'white',
+  },
+  tabItemFocused: {
+    backgroundColor: 'lightgray',
+  },
+  tabItemText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
   },
 });
